@@ -18,8 +18,10 @@ jobs:
       - run:
           name: Generate Report
           command: | 
-            npm run report    
+            npm run report   
 
+      - store_artifacts:
+           path: report
 
 workflows:
   build_test:
