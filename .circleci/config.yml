@@ -1,33 +1,16 @@
 version: 2.1
-jobs: 
-  run_tests:
+
+jobs:
+  auto-create-config:
     docker:
-      - image: circleci/node:14.15.0
+      - image: circleci/config-setup:latest
     steps:
       - checkout
       - run:
-          name: Install Dependencies
-          command: | 
-            npm install
-
-      - run:
-          name: Run tests
-          command: | 
-            npm test     
-
-      - run:
-          name: Generate Report
-          command: | 
-            npm run report   
-
-      - store_artifacts:
-           path: report
+          name: Generate Config
+          command: config-setup generate-and-add-config << pipeline.id >>
 
 workflows:
-  build_test:
+  generate-config:
     jobs:
-      - run_tests
-
-
-
-
+      - auto-create-config
